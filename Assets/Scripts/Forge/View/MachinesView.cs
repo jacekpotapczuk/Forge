@@ -17,7 +17,7 @@ namespace Forge.View
 
         public void Initialize(GameWorld gameWorld)
         {
-            if (_gameWorld != null)
+            if (_gameWorld != null) 
             {
                 _gameWorld.Machines.CollectionChanged -= OnMachinesChanged;
             }
