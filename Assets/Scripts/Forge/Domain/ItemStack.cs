@@ -9,27 +9,27 @@ namespace Forge.Domain
         
         [CanBeNull]
         public Item Item { get; private set; }
-        public int Count { get; private set; }
+        public int Amount { get; private set; }
 
         public ItemStack()
         {
             Item = null;
-            Count = 0;
+            Amount = 0;
         }
 
-        public ItemStack(Item item, int count)
+        public ItemStack(Item item, int amount)
         {
             Item = item;
 
-            if (count < 0)
+            if (amount < 0)
             {
                 throw new Exception("Item stack value can't be less than 0");
             }
             
-            Count = count;
+            Amount = amount;
         }
 
-        public void Add(Item item)
+        public void Add(Item item, int amount)
         {
             if (Item != null && item.Template != Item.Template)
             {
@@ -37,19 +37,19 @@ namespace Forge.Domain
             }
 
             Item ??= item;
-            Count += 1;
+            Amount += amount;
         }
 
         public void Remove()
         {
-            if (Item == null || Count <= 0)
+            if (Item == null || Amount <= 0)
             {
                 throw new Exception("There is nothing to remove!");
             }
 
-            Count -= 1;
+            Amount -= 1;
 
-            if (Count == 0)
+            if (Amount == 0)
             {
                 Clear();
             }

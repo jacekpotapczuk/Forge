@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 336a640abd57494b9486d13f3be42a15, type: 3}
-  m_Name: iron_ore
+  m_Name: lucky_charm
   m_EditorClassIdentifier: 
-  Sprite: {fileID: 21300000, guid: 1a1d948fc8e18954385d09cbea963dcc, type: 3}
-  Name: Iron Ore
-  Description: Raw material used to create metal-based items
+  _sprite: {fileID: 21300000, guid: 548b5fb94496efa4da8ee5f3f095bf29, type: 3}
+  _name: Lucky Charm
+  _description: Very very lucky

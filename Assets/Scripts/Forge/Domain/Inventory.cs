@@ -1,5 +1,6 @@
 
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Forge.Domain
 {
@@ -11,6 +12,11 @@ namespace Forge.Domain
             _columnsCount = columnsCount;
             
             _itemStacks = new ItemStack[_columnsCount, _rowsCount];
+            Clear();
+        }
+
+        public void Clear()
+        {
             _itemLocations = new Dictionary<Item, (int, int)>();
             
             for (var y = 0; y < _rowsCount; y++)
@@ -21,14 +27,40 @@ namespace Forge.Domain
                 }
             }
         }
+        
 
-        public bool TryAddItem(Item item)
+        public void AddStartingItems(IReadOnlyList<StartingItemTemplate> startingItemTemplates)
         {
+            foreach (var startingItemTemplate in startingItemTemplates)
+            {
+                var itemStack = startingItemTemplate.Generate();
+
+                if (itemStack == null)
+                {
+                    continue;
+                }
+
+                var didAdd = TryAddItemStack(itemStack);
+
+                if (!didAdd)
+                {
+                    Debug.LogError($"Can't add starting item {startingItemTemplate}."); 
+                }
+            }
+        }
+
+        public bool TryAddItem(Item item, int amount)
+        {
+            if (item == null)
+            {
+                return false;
+            }
+            
             if (_itemLocations.ContainsKey(item))
             {
                 var (y, x) = _itemLocations[item];
                 
-                _itemStacks[y, x].Add(item);
+                _itemStacks[y, x].Add(item, amount);
                 return true;
             }
 
@@ -44,7 +76,7 @@ namespace Forge.Domain
                         continue;
                     }
                     
-                    stack.Add(item);
+                    stack.Add(item, amount);
                     return true;
                 }
             }
@@ -52,9 +84,20 @@ namespace Forge.Domain
             return false;
         }
 
+        public bool TryAddItemStack(ItemStack itemStack)
+        {
+            if (itemStack == null || itemStack.IsEmpty)
+            {
+                return false;
+            }
+
+            return TryAddItem(itemStack.Item, itemStack.Amount);
+        }
+
         private readonly ItemStack[,] _itemStacks;
-        private readonly Dictionary<Item, (int, int)> _itemLocations;
         private readonly int _rowsCount;
         private readonly int _columnsCount;
+        
+        private Dictionary<Item, (int, int)> _itemLocations;
     }
 }

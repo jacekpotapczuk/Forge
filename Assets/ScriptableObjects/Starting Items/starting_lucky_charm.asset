@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72db02bcef114cd7a386ef4ae7c61894, type: 3}
+  m_Name: starting_lucky_charm
+  m_EditorClassIdentifier: 
+  _itemTemplate: {fileID: 11400000, guid: c88b23aae60b2334c8ed8b0b4b15e704, type: 2}
+  _spawnBehaviourTemplate: {fileID: 11400000, guid: a00b09e3a14130142aad9d4c4eb35f4a, type: 2}
