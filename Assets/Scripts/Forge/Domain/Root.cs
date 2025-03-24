@@ -9,15 +9,28 @@ namespace Forge.Domain
         [SerializeField] 
         private List<StartingItemTemplate> _staringItems;
 
-        public Player Player { get; private set; }
+        [SerializeField] 
+        private List<MachineTemplate> _startingMachines;
+        
+        public GameWorld GameWorld { get; private set; }
         
         public void Awake()
         {
-            var playerInventory = new Inventory(8, 8);
+            GameWorld = new GameWorld();
+            
+            // todo: obviously column/row count can be extracted here, but the game doesn't handle
+            // resizing inventory on graphical side very well so I keep them as constants here 
+            var playerInventory = new Inventory(4, 4);
             playerInventory.AddStartingItems(_staringItems);
             
-            var player = new Player(playerInventory);
-            Player = player;
+            var player = new Player(GameWorld, playerInventory);
+            
+            GameWorld.AddPlayer(player);
+
+            foreach (var machineTemplate in _startingMachines)
+            {
+                GameWorld.SpawnMachine(machineTemplate);
+            }
         }
     }
 }

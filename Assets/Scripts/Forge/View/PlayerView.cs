@@ -1,4 +1,3 @@
-using System;
 using Forge.Domain;
 using UnityEngine;
 
@@ -6,21 +5,16 @@ namespace Forge.View
 {
     public class PlayerView : MonoBehaviour
     {
-        public Player Player => _player;
-
-        public void Awake()
+        public void Initialize(Player player)
         {
-            _player = _root.Player;
-
-            if (_player == null)
-            {
-                throw new Exception($"Assigned Player for {nameof(PlayerView)} is null");
-            }
+            _player = player;
+            
+            _inventoryView.Initialize(player.Inventory);
         }
-        
-        [SerializeField] 
-        private Root _root;
 
+        [SerializeField] 
+        private InventoryView _inventoryView;
+        
         private Player _player;
     }
 }

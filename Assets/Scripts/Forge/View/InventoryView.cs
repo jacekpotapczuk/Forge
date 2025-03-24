@@ -7,19 +7,20 @@ namespace Forge.View
     [RequireComponent(typeof(GridLayoutGroup))]
     public class InventoryView : MonoBehaviour
     {
-        [SerializeField]
-        private PlayerView _playerView;
-
         [SerializeField] 
         private ItemStackView _itemStackViewPrefab;
         
         public void Start()
         {
             _gridLayoutGroup = GetComponent<GridLayoutGroup>();
-            _inventory = _playerView.Player.Inventory;
-
+            
             Clear();
             CreteView();
+        }
+
+        public void Initialize(Inventory inventory)
+        {
+            _inventory = inventory;
         }
 
         public void Clear()
