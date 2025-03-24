@@ -6,6 +6,8 @@ namespace Forge.Domain
 {
     public class Inventory
     {
+        public ItemStack[,] ItemStacks => _itemStacks;
+        
         public Inventory(int columnsCount, int rowsCount)
         {
             _rowsCount = rowsCount;
@@ -92,6 +94,19 @@ namespace Forge.Domain
             }
 
             return TryAddItem(itemStack.Item, itemStack.Amount);
+        }
+
+        public IEnumerator<ItemStack> GetEnumerator()
+        {
+            for (var y = 0; y < _rowsCount; y++)
+            {
+                for (var x = 0; x < _columnsCount; x++)
+                {
+                    var stack = _itemStacks[y, x];
+
+                    yield return stack;
+                }
+            }
         }
 
         private readonly ItemStack[,] _itemStacks;

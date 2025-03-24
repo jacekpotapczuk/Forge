@@ -5,6 +5,8 @@ namespace Forge.Domain
 {
     public class ItemStack
     {
+        public Action Changed;
+        
         public bool IsEmpty => Item == null;
         
         [CanBeNull]
@@ -38,6 +40,7 @@ namespace Forge.Domain
 
             Item ??= item;
             Amount += amount;
+            Changed?.Invoke();
         }
 
         public void Remove()
@@ -53,6 +56,8 @@ namespace Forge.Domain
             {
                 Clear();
             }
+            
+            Changed?.Invoke();
         }
         
         private void Clear()

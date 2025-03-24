@@ -8,14 +8,16 @@ namespace Forge.Domain
     {
         [SerializeField] 
         private List<StartingItemTemplate> _staringItems;
+
+        public Player Player { get; private set; }
         
-        public void Start()
+        public void Awake()
         {
             var playerInventory = new Inventory(8, 8);
             playerInventory.AddStartingItems(_staringItems);
             
             var player = new Player(playerInventory);
-            
+            Player = player;
         }
     }
 }
