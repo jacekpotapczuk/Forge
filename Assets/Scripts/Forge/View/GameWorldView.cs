@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Forge.Domain;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Serialization;
 
 namespace Forge.View
 {
@@ -32,6 +33,7 @@ namespace Forge.View
             }
 
             _machinesView.Initialize(_gameWorld);
+            _notificationView.Initialize(_gameWorld.NotificationService);
         }
 
         [SerializeField] 
@@ -42,6 +44,9 @@ namespace Forge.View
 
         [SerializeField] 
         private PlayerView _playerViewPrefab;
+
+        [SerializeField] 
+        private NotificationView _notificationView;
 
 
         private List<PlayerView> _playerViews;

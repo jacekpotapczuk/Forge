@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Forge.Domain
 {
@@ -7,15 +8,15 @@ namespace Forge.Domain
     public class RecipeTemplate : ScriptableObject
     {
         public List<ItemTemplate> InputItemTemplates => _inputItemTemplates;
-        public ItemTemplate OutputItemTemplates => _outputTemplate;
+        public ItemTemplate OutputItemTemplate => outputTemplate;
         public float CompletionTime => _completionTime;
         public float SuccessChancePercentage => _successChancePercentage;
         
         [SerializeField]
         private List<ItemTemplate> _inputItemTemplates;
         
-        [SerializeField]
-        private ItemTemplate _outputTemplate;
+        [FormerlySerializedAs("_outputTemplate")] [SerializeField]
+        private ItemTemplate outputTemplate;
         
         [SerializeField] [Range(1f, 10f)]
         private float _completionTime = 2f;

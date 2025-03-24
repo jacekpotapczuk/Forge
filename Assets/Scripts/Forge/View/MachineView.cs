@@ -13,12 +13,61 @@ namespace Forge.View
         {
             _image = GetComponent<Image>();
             _inputItemStacks = new List<ItemStackView>();
+            _forgeButton.onClick.AddListener(OnForgeButtonClicked);
+            _progressBarHolder.SetActive(false);
+        }
+
+        public void OnDisable()
+        {
+            _forgeButton.onClick.RemoveListener(OnForgeButtonClicked);
+        }
+
+        private void OnForgeButtonClicked()
+        {
+            if (_machine == null)
+            {
+                return;
+            }
+
+            _machine.TryProcess();
         }
 
         public void Initialize(Machine machine)
         {
             _machine = machine;
             UpdateGraphics();
+            _machine.ProcessingStarted += OnProcessingStarted;
+            _machine.ProcessingEnded += OnProcessingEnded;
+        }
+
+        public void Update()
+        {
+            if (!_shouldUpdateProgressBar)
+            {
+                return;
+            }
+
+            _progressBar.fillAmount = 1f - (_machine.TimeUntilCompletion / _machine.ProceedRecipe.CompletionTime);
+        }
+
+        private void OnProcessingEnded()
+        {
+            _progressBarHolder.gameObject.SetActive(false);
+            _shouldUpdateProgressBar = false;
+        }
+
+        private bool _shouldUpdateProgressBar = false;
+
+        private void OnProcessingStarted()
+        {
+            _progressBarHolder.SetActive(true);
+            _shouldUpdateProgressBar = true;
+        }
+
+        public void OnDestroy()
+        {
+            _machine.ProcessingStarted -= OnProcessingStarted;
+            _machine.ProcessingEnded -= OnProcessingEnded;
         }
 
         private void UpdateGraphics()
@@ -34,16 +83,14 @@ namespace Forge.View
             
             _inputItemStacks.Clear();
 
-            var inputCount = _machine.Template.GetNumberOfInputs();
-
-            for (var i = 0; i < inputCount; i++)
+            foreach (var input in _machine.Inputs)
             {
                 var itemSTack = GameObjectPool.Get(_inputItemStackPrefab, _inputsHolder);
-                itemSTack.Initialize(new ItemStack());
+                itemSTack.Initialize(input);
                 _inputItemStacks.Add(itemSTack);
             }
             
-            _outputItemStackView.Initialize(new ItemStack());
+            _outputItemStackView.Initialize(_machine.Output);
         }
 
         [SerializeField]
@@ -54,6 +101,15 @@ namespace Forge.View
 
         [SerializeField] 
         private ItemStackView _inputItemStackPrefab;
+
+        [SerializeField] 
+        private Button _forgeButton;
+        
+        [SerializeField] 
+        private Image _progressBar;
+        
+        [SerializeField] 
+        private GameObject _progressBarHolder;
 
         private Machine _machine;
         private Image _image;

@@ -43,7 +43,7 @@ namespace Forge.Domain
             Changed?.Invoke();
         }
 
-        public void Remove()
+        public void RemoveOne()
         {
             if (Item == null || Amount <= 0)
             {
@@ -59,10 +59,18 @@ namespace Forge.Domain
             
             Changed?.Invoke();
         }
+
+        public void RemoveAll()
+        {
+            Amount = 0;
+            Clear();
+            Changed?.Invoke();
+        }
         
         private void Clear()
         {
             Item = null;
+            
         }
     }
 }

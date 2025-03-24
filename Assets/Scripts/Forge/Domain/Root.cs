@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -31,6 +32,11 @@ namespace Forge.Domain
             {
                 GameWorld.SpawnMachine(machineTemplate);
             }
+        }
+
+        public void Update()
+        {
+            GameWorld.Update(Time.deltaTime);
         }
     }
 }

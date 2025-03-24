@@ -103,7 +103,7 @@ namespace Forge.View
 
             if (didAdd)
             {
-                _itemStack.Remove();
+                _itemStack.RemoveOne();
             }
         }
 
