@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4df34ef5f06c49ea8f1f8f7368f0bf6d, type: 3}
-  m_Name: smelter
+  m_Name: anvil
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 21300000, guid: 0da06f036c959d744820a016692d1b47, type: 3}
-  _name: Smelter
-  _description: Converts Iron Ore into Iron Ingot
+  _sprite: {fileID: 21300000, guid: 677d6938c657f8449ae5acc981d1c818, type: 3}
+  _name: Anvil
+  _description: Forges Steel Ingot from Iron Ingot and Fire Shard
   _recipeTemplates:
-  - {fileID: 11400000, guid: 359cf00c91158b24bb7a95ed13cb51ca, type: 2}
-  - {fileID: 11400000, guid: 4bcad14748e50fd46a0b5f88203ac4a5, type: 2}
+  - {fileID: 11400000, guid: eff857615cbdc5c4bace11f958d75053, type: 2}
+  - {fileID: 11400000, guid: 9f977fcf7a68da44ba5bead2691b7697, type: 2}

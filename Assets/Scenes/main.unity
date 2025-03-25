@@ -189,7 +189,7 @@ MonoBehaviour:
     m_Top: 10
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 10
+  m_Spacing: 45
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
@@ -342,9 +342,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _staringItems:
   - {fileID: 11400000, guid: eda67bd63ae4f524eb6a8d468c01b8a0, type: 2}
+  - {fileID: 11400000, guid: 0eb441b5f2eaccc408ac5d1dc5dc1a59, type: 2}
+  - {fileID: 11400000, guid: 4710cf11e8500bc4888c8b28bbe0a341, type: 2}
+  - {fileID: 11400000, guid: 85175f7ea1268ab46bba5ca26bb1d9eb, type: 2}
+  - {fileID: 11400000, guid: b6d5f30ddd9a2f1478d6f44bd44e2548, type: 2}
   - {fileID: 11400000, guid: 5b2215a629bcfc942997549021c7d348, type: 2}
+  - {fileID: 11400000, guid: 04e74ffee20dadb4790c0c339f74f789, type: 2}
   _startingMachines:
   - {fileID: 11400000, guid: 3d1bd23aa4f4e1741ab649b2a795fdbc, type: 2}
+  - {fileID: 11400000, guid: 42884ab4f6143814d9e9a35a1e6bbf01, type: 2}
+  - {fileID: 11400000, guid: 5112e24846a228f488e4e17ab7d93533, type: 2}
+  - {fileID: 11400000, guid: 6e8fbf1ae8390a4438dc7e90c26137a8, type: 2}
+  - {fileID: 11400000, guid: a51a24f0ebee11e46a3f5347111e7fd7, type: 2}
 --- !u!1 &710314814
 GameObject:
   m_ObjectHideFlags: 0

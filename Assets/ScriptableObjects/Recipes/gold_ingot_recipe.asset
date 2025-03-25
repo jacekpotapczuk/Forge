@@ -9,11 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: iron_ore_to_iron_ingot
-  m_EditorClassIdentifier: Domain:Forge.Domain:RecipeTemplate
+  m_Script: {fileID: 11500000, guid: c99e46d71ddd475a9623369d26b31fe2, type: 3}
+  m_Name: gold_ingot_recipe
+  m_EditorClassIdentifier: 
   _inputItemTemplates:
-  - {fileID: 11400000, guid: f7becf6c52efabe4c8233b316ac35fee, type: 2}
-  _outputTemplate: {fileID: 11400000, guid: 2a602552803daee43a1073609366018a, type: 2}
-  _completionTime: 2
+  - {fileID: 11400000, guid: 14cd33ddc87088248a59c77c92eeb133, type: 2}
+  _outputTemplate: {fileID: 11400000, guid: 0d5af4785a3d5294e8908fc646fe6c08, type: 2}
+  _completionTime: 3
   _successChancePercentage: 1

@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72db02bcef114cd7a386ef4ae7c61894, type: 3}
-  m_Name: starting_lucky_charm
+  m_Script: {fileID: 11500000, guid: 336a640abd57494b9486d13f3be42a15, type: 3}
+  m_Name: fire_shard
   m_EditorClassIdentifier: 
-  _itemTemplate: {fileID: 11400000, guid: c88b23aae60b2334c8ed8b0b4b15e704, type: 2}
-  _spawnBehaviourTemplate: {fileID: 11400000, guid: 144932003e583884bba01f3e7ea52d61, type: 2}
+  _sprite: {fileID: 21300000, guid: e6720ff294ee9b94ba76b359af8a0a9c, type: 3}
+  _name: Fire Shard
+  _description: Elemental crystal that provides heat and a slight enchantment

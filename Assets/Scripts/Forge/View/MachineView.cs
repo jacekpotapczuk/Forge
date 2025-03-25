@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Forge.Domain;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -91,6 +92,7 @@ namespace Forge.View
             }
             
             _outputItemStackView.Initialize(_machine.Output);
+            _title.text = _machine.Template.Name;
         }
 
         [SerializeField]
@@ -110,6 +112,9 @@ namespace Forge.View
         
         [SerializeField] 
         private GameObject _progressBarHolder;
+
+        [SerializeField] 
+        private TMP_Text _title;
 
         private Machine _machine;
         private Image _image;

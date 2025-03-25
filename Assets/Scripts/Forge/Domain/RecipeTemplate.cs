@@ -8,15 +8,15 @@ namespace Forge.Domain
     public class RecipeTemplate : ScriptableObject
     {
         public List<ItemTemplate> InputItemTemplates => _inputItemTemplates;
-        public ItemTemplate OutputItemTemplate => outputTemplate;
+        public ItemTemplate OutputItemTemplate => _outputTemplate;
         public float CompletionTime => _completionTime;
         public float SuccessChancePercentage => _successChancePercentage;
         
         [SerializeField]
         private List<ItemTemplate> _inputItemTemplates;
         
-        [FormerlySerializedAs("_outputTemplate")] [SerializeField]
-        private ItemTemplate outputTemplate;
+        [SerializeField]
+        private ItemTemplate _outputTemplate;
         
         [SerializeField] [Range(1f, 10f)]
         private float _completionTime = 2f;

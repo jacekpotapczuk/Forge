@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72db02bcef114cd7a386ef4ae7c61894, type: 3}
-  m_Name: starting_lucky_charm
+  m_Name: starting_ember_dust
   m_EditorClassIdentifier: 
-  _itemTemplate: {fileID: 11400000, guid: c88b23aae60b2334c8ed8b0b4b15e704, type: 2}
-  _spawnBehaviourTemplate: {fileID: 11400000, guid: 144932003e583884bba01f3e7ea52d61, type: 2}
+  _itemTemplate: {fileID: 11400000, guid: 108ceb5c0c723c940b193e9eb7a8e44f, type: 2}
+  _spawnBehaviourTemplate: {fileID: 11400000, guid: 770485e3ccd9a2743a9dcc965f63113c, type: 2}
