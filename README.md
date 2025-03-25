@@ -7,6 +7,9 @@
 - Click **Play**
 - Drag items using the mouse
 
+### Video showcase
+https://youtu.be/Wo4IjKASDng
+
 ## Project Structure
 
 All game data is stored in ScriptableObjects inside **_Assets/ScriptableObjects_**. These can be modified directly to change game behavior.  
