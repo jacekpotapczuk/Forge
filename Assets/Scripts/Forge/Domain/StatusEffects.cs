@@ -3,10 +3,13 @@ using System.Collections.Generic;
 
 namespace Forge.Domain
 {
-    public class StatusEffects
+    /// <summary>
+    /// Manages all <see cref="StatusEffect"/> that affect <see cref="Player"/>
+    /// </summary>
+    public class StatusEffects : IDisposable
     {
         public Action<StatusEffect, HashSet<Item>> StatusEffectUpdated;
-
+        
         public IReadOnlyDictionary<StatusEffect, HashSet<Item>> StatusEffectByProviders => _statusEffectByProviders;
         
         public StatusEffects(Player player)
@@ -16,7 +19,17 @@ namespace Forge.Domain
             _player.Inventory.NewItemAdded += AddFrom;
             _player.Inventory.ItemCleared += RemoveFrom;
         }
-        public void AddFrom(Item item)
+        
+        public void Dispose()
+        {
+            _player.Inventory.NewItemAdded -= AddFrom;
+            _player.Inventory.ItemCleared -= RemoveFrom;
+        }
+
+        private readonly Dictionary<StatusEffect, HashSet<Item>> _statusEffectByProviders = new ();
+        private readonly Player _player;
+        
+        private void AddFrom(Item item)
         {
             foreach (var statusEffect in item.Template.StatusEffects)
             {
@@ -36,7 +49,7 @@ namespace Forge.Domain
             }
         }
 
-        public void RemoveFrom(Item item)
+        private void RemoveFrom(Item item)
         {
             foreach (var statusEffect in item.Template.StatusEffects)
             {
@@ -63,9 +76,5 @@ namespace Forge.Domain
                 }
             }
         }
-        
-
-        private readonly Dictionary<StatusEffect, HashSet<Item>> _statusEffectByProviders = new ();
-        private readonly Player _player;
     }
 }

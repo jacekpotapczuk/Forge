@@ -1,13 +1,17 @@
+using System;
 using Forge.Domain;
 using UnityEngine;
 
 namespace Forge.View
 {
+    /// <summary>
+    /// View for <see cref="Player"/>
+    /// </summary>
     public class PlayerView : MonoBehaviour
     {
         public void Initialize(Player player)
         {
-            _player = player;
+            _player = player ?? throw new NullReferenceException(nameof(player));
             
             _inventoryView.Initialize(player.Inventory);
             _statusEffectsView.Initialize(player.StatusEffects);

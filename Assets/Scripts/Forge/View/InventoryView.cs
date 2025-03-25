@@ -1,9 +1,13 @@
-﻿using Forge.Domain;
+﻿using System;
+using Forge.Domain;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Forge.View
 {
+    /// <summary>
+    /// View for <see cref="Inventory"/>
+    /// </summary>
     [RequireComponent(typeof(GridLayoutGroup))]
     public class InventoryView : MonoBehaviour
     {
@@ -20,7 +24,7 @@ namespace Forge.View
 
         public void Initialize(Inventory inventory)
         {
-            _inventory = inventory;
+            _inventory = inventory ?? throw new NullReferenceException(nameof(inventory));
         }
 
         public void Clear()

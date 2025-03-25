@@ -7,14 +7,12 @@ using UnityEngine.UI;
 
 namespace Forge.View
 {
+    /// <summary>
+    /// Handles List of all available <see cref="MachineView"/>
+    /// </summary>
     [RequireComponent(typeof(VerticalLayoutGroup))]
     public class MachinesView : MonoBehaviour
     {
-        public void Awake()
-        {
-            _machineViews = new List<MachineView>();
-        }
-
         public void Initialize(GameWorld gameWorld)
         {
             if (_gameWorld != null) 
@@ -35,6 +33,13 @@ namespace Forge.View
         {
             _gameWorld.Machines.CollectionChanged -= OnMachinesChanged;
         }
+        
+        [SerializeField] 
+        private MachineView _machineViewPrefab;
+        
+        private readonly List<MachineView> _machineViews = new();
+        
+        private GameWorld _gameWorld;
 
         private void OnMachinesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -55,7 +60,8 @@ namespace Forge.View
                 case NotifyCollectionChangedAction.Replace:
                 case NotifyCollectionChangedAction.Reset:
                 default:
-                    throw new NotImplementedException();
+                    // todo: implement
+                    break;
             }
         }
 
@@ -65,11 +71,5 @@ namespace Forge.View
             machineView.Initialize(_gameWorld, machine);
             _machineViews.Add(machineView);
         }
-        
-        [SerializeField] 
-        private MachineView _machineViewPrefab;
-        
-        private List<MachineView> _machineViews;
-        private GameWorld _gameWorld;
     }
 }

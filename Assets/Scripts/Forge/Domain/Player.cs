@@ -3,7 +3,10 @@ using System.Collections.Generic;
 
 namespace Forge.Domain
 {
-    public class Player
+    /// <summary>
+    /// Defines Player
+    /// </summary>
+    public class Player : IDisposable
     {
         public Action<RecipeTemplate> RecipeCrafted;
         
@@ -21,27 +24,29 @@ namespace Forge.Domain
             _gameWorld = gameWorld ?? throw new NullReferenceException(nameof(gameWorld));
             Inventory = inventory ?? throw new NullReferenceException(nameof(inventory));
             
-            
             StatusEffects = new StatusEffects(this);
             QuestJournal = new QuestJournal(this, startingQuests);
         }
-
-        public void ChangeLuck(float change)
+        
+        public void Dispose()
         {
-            Luck += change;
+            Inventory.Dispose();
+            StatusEffects.Dispose();
+            QuestJournal.Dispose();
         }
 
-        public void ChangeCraftingTimeReduction(float change)
-        {
-            CraftingTimeReduction += change;
-        }
+        public void ChangeLuck(float change) 
+            => Luck += change;
 
-        private GameWorld _gameWorld;
+        public void ChangeCraftingTimeReduction(float change) 
+            => CraftingTimeReduction += change;
 
         public void NotifySuccessfulCraft(RecipeTemplate recipe) 
             => RecipeCrafted?.Invoke(recipe);
 
         public void UnlockMachine(MachineTemplate machineTemplate) 
             => _gameWorld.SpawnMachine(machineTemplate);
+        
+        private readonly GameWorld _gameWorld;
     }
 }

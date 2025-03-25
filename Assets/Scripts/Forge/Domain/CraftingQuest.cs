@@ -2,6 +2,9 @@
 
 namespace Forge.Domain
 {
+    /// <summary>
+    /// Stores quest and its progress
+    /// </summary>
     public class CraftingQuest
     {
         public Action<CraftingQuest> Completed;

@@ -4,7 +4,10 @@ using UnityEngine;
 
 namespace Forge.Domain
 {
-    public class Machine
+    /// <summary>
+    /// Defines Machine instance
+    /// </summary>
+    public class Machine : IDisposable
     {
         public Action ProcessingStarted;
         public Action ProcessingEnded;
@@ -34,6 +37,17 @@ namespace Forge.Domain
 
             _output = new ItemStack();
         }
+        
+        
+        public void Dispose()
+        {
+            for (var i = Inputs.Length - 1; i >= 0; i--)
+            {
+                Inputs[i].Dispose();
+            }
+
+            Output.Dispose();
+        }
 
         public void Update(float deltaTime)
         {
@@ -54,7 +68,7 @@ namespace Forge.Domain
         {
             if (_isProcessing)
             {
-                _gameWorld.NotificationService.ShowNotification("I'm busy!", type: NotificationType.Error);
+                _gameWorld.NotificationService.ShowNotification($"{Template.Name} machine is busy!", type: NotificationType.Error);
                 return false;
             }
             var anyNonEmpty = false;
@@ -95,6 +109,16 @@ namespace Forge.Domain
             _gameWorld.NotificationService.ShowNotification("No valid recipe for given inputs", type: NotificationType.Error);
             return false;
         }
+        
+        private readonly GameWorld _gameWorld;
+        // todo: caching can be added to inputs, so there is no need to search whole list to check if given item is in inputs
+        private readonly ItemStack[] _inputs;
+        private readonly ItemStack _output;
+
+        private bool _isProcessing = false;
+        private float _timeUntilCompletion;
+        private RecipeTemplate _currentlyProceededRecipeTemplate;
+        private Player _crafter;
 
         private void ProcessRecipe(RecipeTemplate recipeTemplate, Player crafter)
         {
@@ -145,16 +169,5 @@ namespace Forge.Domain
             _crafter = null;
             ProcessingEnded?.Invoke();
         }
-
-        private readonly GameWorld _gameWorld;
-        
-        // todo: caching can be added to inputs, so there is no need to search whole list to check if given item is in inputs
-        private ItemStack[] _inputs;
-        private ItemStack _output;
-
-        private bool _isProcessing = false;
-        private float _timeUntilCompletion;
-        private RecipeTemplate _currentlyProceededRecipeTemplate;
-        private Player _crafter;
     }
 }

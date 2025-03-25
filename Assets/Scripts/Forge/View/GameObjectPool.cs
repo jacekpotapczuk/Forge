@@ -2,10 +2,12 @@
 
 namespace Forge.View
 {
+    /// <summary>
+    /// *Should* Provides pooling functionality
+    /// todo: proper pooling, disable game objects only
+    /// </summary>
     public static class GameObjectPool
     {
-        // todo: proper pooling, disable game objects only
-        
         public static T Get<T>(T gameObject) where T : Object
         {
             return Object.Instantiate(gameObject);

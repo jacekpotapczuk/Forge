@@ -6,10 +6,12 @@ using UnityEngine.UI;
 
 namespace Forge.View
 {
+    /// <summary>
+    /// View for <see cref="StatusEffect"/>
+    /// </summary>
     [RequireComponent(typeof(VerticalLayoutGroup))]
     public class StatusEffectsView : MonoBehaviour
     {
-        
         public void Initialize(StatusEffects statusEffects)
         {
             _statusEffects = statusEffects ?? throw new NullReferenceException(nameof(statusEffects));
@@ -26,6 +28,14 @@ namespace Forge.View
         {
             _statusEffects.StatusEffectUpdated -= OnStatusEffectUpdated;
         }
+        
+        [SerializeField] 
+        private StatusEffectView _statusEffectPrefab;
+        
+        private readonly Dictionary<StatusEffect, StatusEffectView> _statusEffectViews = new();
+        
+        private StatusEffects _statusEffects;
+        
 
         private void OnStatusEffectUpdated(StatusEffect statusEffect, HashSet<Item> items)
         {
@@ -49,12 +59,5 @@ namespace Forge.View
                 _statusEffectViews.Add(statusEffect, view);
             }
         }
-
-        [SerializeField] 
-        private StatusEffectView _statusEffectPrefab;
-        
-        private StatusEffects _statusEffects;
-        private Dictionary<StatusEffect, StatusEffectView> _statusEffectViews = new();
-
     }
 }

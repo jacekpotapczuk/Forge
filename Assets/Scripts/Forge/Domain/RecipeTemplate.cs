@@ -4,6 +4,9 @@ using UnityEngine.Serialization;
 
 namespace Forge.Domain
 {
+    /// <summary>
+    /// Defines recipe.
+    /// </summary>
     [CreateAssetMenu(fileName = "RecipeTemplate", menuName = "Forge/RecipeTemplate")]
     public class RecipeTemplate : ScriptableObject
     {

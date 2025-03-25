@@ -3,7 +3,7 @@
 namespace Forge.Domain
 {
     /// <summary>
-    /// Defines how itme amount is generated
+    /// Defines how item amount is generated
     /// </summary>
     public abstract class ItemSpawnBehaviourTemplate : ScriptableObject
     {

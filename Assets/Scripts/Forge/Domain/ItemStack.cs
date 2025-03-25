@@ -3,7 +3,10 @@ using JetBrains.Annotations;
 
 namespace Forge.Domain
 {
-    public class ItemStack
+    /// <summary>
+    /// Defines a stack of <see cref="Item"/>
+    /// </summary>
+    public class ItemStack : IDisposable
     {
         public Action Changed;
         public Action<Item> NewItemAdded;
@@ -31,6 +34,11 @@ namespace Forge.Domain
             }
             
             Amount = amount;
+        }
+        
+        public void Dispose()
+        {
+            Item?.Dispose();
         }
 
         public void Add(Item item, int amount)

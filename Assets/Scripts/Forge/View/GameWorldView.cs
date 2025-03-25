@@ -7,13 +7,15 @@ using UnityEngine.Serialization;
 
 namespace Forge.View
 {
+    /// <summary>
+    /// View for <see cref="GameWorld"/>
+    /// </summary>
     public class GameWorldView : MonoBehaviour
     {
         public GameWorld GameWorld => _gameWorld;
 
         public void Awake()
         {
-            _playerViews = new List<PlayerView>();
             _gameWorld = _root.GameWorld;
 
             if (_gameWorld == null)
@@ -49,8 +51,7 @@ namespace Forge.View
         private NotificationView _notificationView;
 
 
-        private List<PlayerView> _playerViews;
-        
+        private readonly List<PlayerView> _playerViews = new();
         private GameWorld _gameWorld;
     }
 }

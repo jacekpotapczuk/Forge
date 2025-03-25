@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace Forge.View
 {
+    /// <summary>
+    /// View for <see cref="CraftingQuest"/>
+    /// </summary>
     [RequireComponent(typeof(TMP_Text))]
     public class CraftingQuestView : MonoBehaviour
     {
@@ -24,6 +27,11 @@ namespace Forge.View
             _quest.ProgressMoved += OnProgressMoved;
             
             UpdateText();
+        }
+
+        public void OnDestroy()
+        {
+            _quest.ProgressMoved -= OnProgressMoved;
         }
 
         private void OnProgressMoved(CraftingQuest arg1, int arg2) 

@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Forge.Domain
 {
+    /// <summary>
+    /// Template for <see cref="Machine"/>
+    /// </summary>
     [CreateAssetMenu(fileName = "MachineTemplate", menuName = "Forge/MachineTemplate")]
     public class MachineTemplate : ScriptableObject
     {

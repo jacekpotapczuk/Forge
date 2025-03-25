@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: 25%_1
   m_EditorClassIdentifier: 
   _amount: 1
-  _percentChance: 1
+  _percentChance: 0.25

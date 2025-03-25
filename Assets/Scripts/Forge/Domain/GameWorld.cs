@@ -4,19 +4,32 @@ using System.Collections.ObjectModel;
 
 namespace Forge.Domain
 {
-    public class GameWorld
+    /// <summary>
+    /// Stores current state of the world.
+    /// </summary>
+    public class GameWorld : IDisposable
     {
         public IReadOnlyList<Player> Players => _players;
         
-        public ObservableCollection<Machine> Machines { get; private set; }
+        public ObservableCollection<Machine> Machines { get; private set; } = new();
+
+        public NotificationService NotificationService { get; } = new();
         
-        public NotificationService NotificationService { get; }
-        
-        public GameWorld()
+        public void Dispose()
         {
-            _players = new List<Player>();
-            Machines = new ObservableCollection<Machine>();
-            NotificationService = new NotificationService();
+            for (var i = _players.Count - 1; i >= 0; i--)
+            {
+                _players[i].Dispose();
+            }
+            
+            _players.Clear();
+            
+            for (var i = Machines.Count - 1; i >= 0; i--)
+            {
+                Machines[i].Dispose();
+            }
+            
+            Machines.Clear();
         }
 
         public void Update(float deltaTime)
@@ -44,6 +57,6 @@ namespace Forge.Domain
             Machines.Add(machine);
         }
         
-        private List<Player> _players;
+        private readonly List<Player> _players = new();
     }
 }

@@ -7,10 +7,13 @@ using UnityEngine;
 
 namespace Forge.View
 {
+    /// <summary>
+    /// View for <see cref="StatusEffect"/>
+    /// </summary>
     [RequireComponent(typeof(TMP_Text))]
     public class StatusEffectView : MonoBehaviour
     {
-        private void Awake()
+        public void Awake()
         {
             _text = GetComponent<TMP_Text>();
         }

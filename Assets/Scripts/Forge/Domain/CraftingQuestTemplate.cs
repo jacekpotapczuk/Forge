@@ -3,6 +3,9 @@ using UnityEngine.Serialization;
 
 namespace Forge.Domain
 {
+    /// <summary>
+    /// Template for <see cref="CraftingQuest"/>
+    /// </summary>
     [CreateAssetMenu(fileName = "Crafting Quest Template", menuName = "Forge/Crafting Quest")]
     public class CraftingQuestTemplate : ScriptableObject
     {

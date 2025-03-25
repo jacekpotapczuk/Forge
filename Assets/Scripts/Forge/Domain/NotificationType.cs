@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace Forge.Domain
 {
+    /// <summary>
+    /// Notification type
+    /// </summary>
     public enum NotificationType
     {
         Info = 0,

@@ -5,12 +5,13 @@ using UnityEngine;
 
 namespace Forge.Domain
 {
-    public class Inventory
+    /// <summary>
+    /// Stores Player's Inventory
+    /// </summary>
+    public class Inventory : IDisposable
     {
         public Action<Item> NewItemAdded;
         public Action<Item> ItemCleared;
-        
-        public ItemStack[,] ItemStacks => _itemStacks;
         
         public Inventory(int columnsCount, int rowsCount)
         {
@@ -20,8 +21,8 @@ namespace Forge.Domain
             _itemStacks = new ItemStack[_columnsCount, _rowsCount];
             Clear();
         }
-
-        public void Clear()
+        
+        public void Dispose()
         {
             for (var y = 0; y < _rowsCount; y++)
             {
@@ -32,24 +33,9 @@ namespace Forge.Domain
                         _itemStacks[y, x].Cleared -= OnItemStackCleared;
                         _itemStacks[y, x].NewItemAdded -= OnNewItemAdded;
                     }
-                    
-                    _itemStacks[y, x] = new ItemStack();
-                    _itemStacks[y, x].Cleared += OnItemStackCleared;
-                    _itemStacks[y, x].NewItemAdded += OnNewItemAdded;
                 }
             }
         }
-
-        private void OnNewItemAdded(Item item)
-        {
-            NewItemAdded?.Invoke(item);
-        }
-
-        private void OnItemStackCleared(Item clearedItem)
-        {
-            ItemCleared?.Invoke(clearedItem);
-        }
-
 
         public void AddStartingItems(IReadOnlyList<StartingItemTemplate> startingItemTemplates)
         {
@@ -71,7 +57,59 @@ namespace Forge.Domain
             }
         }
 
-        public bool TryAddItem(Item item, int amount)
+        public bool TryAddItemStack(ItemStack itemStack)
+        {
+            if (itemStack == null || itemStack.IsEmpty)
+            {
+                return false;
+            }
+
+            return TryAddItem(itemStack.Item, itemStack.Amount);
+        }
+
+        public IEnumerator<ItemStack> GetEnumerator()
+        {
+            for (var y = 0; y < _rowsCount; y++)
+            {
+                for (var x = 0; x < _columnsCount; x++)
+                {
+                    var stack = _itemStacks[y, x];
+
+                    yield return stack;
+                }
+            }
+        }
+
+        private readonly ItemStack[,] _itemStacks;
+        private readonly int _rowsCount;
+        private readonly int _columnsCount;
+        
+        private void Clear()
+        {
+            for (var y = 0; y < _rowsCount; y++)
+            {
+                for (var x = 0; x < _columnsCount; x++)
+                {
+                    if (_itemStacks[y, x] != null)
+                    {
+                        _itemStacks[y, x].Cleared -= OnItemStackCleared;
+                        _itemStacks[y, x].NewItemAdded -= OnNewItemAdded;
+                    }
+                    
+                    _itemStacks[y, x] = new ItemStack();
+                    _itemStacks[y, x].Cleared += OnItemStackCleared;
+                    _itemStacks[y, x].NewItemAdded += OnNewItemAdded;
+                }
+            }
+        }
+
+        private void OnNewItemAdded(Item item) 
+            => NewItemAdded?.Invoke(item);
+
+        private void OnItemStackCleared(Item clearedItem)
+            => ItemCleared?.Invoke(clearedItem);
+
+        private bool TryAddItem(Item item, int amount)
         {
             if (item == null)
             {
@@ -79,7 +117,6 @@ namespace Forge.Domain
             }
 
             // this could be cached but for any reasonable player inventory size this shouldn't be a problem
-            
             for (var y = 0; y < _rowsCount; y++)
             {
                 for (var x = 0; x < _columnsCount; x++)
@@ -110,32 +147,5 @@ namespace Forge.Domain
 
             return false;
         }
-
-        public bool TryAddItemStack(ItemStack itemStack)
-        {
-            if (itemStack == null || itemStack.IsEmpty)
-            {
-                return false;
-            }
-
-            return TryAddItem(itemStack.Item, itemStack.Amount);
-        }
-
-        public IEnumerator<ItemStack> GetEnumerator()
-        {
-            for (var y = 0; y < _rowsCount; y++)
-            {
-                for (var x = 0; x < _columnsCount; x++)
-                {
-                    var stack = _itemStacks[y, x];
-
-                    yield return stack;
-                }
-            }
-        }
-
-        private readonly ItemStack[,] _itemStacks;
-        private readonly int _rowsCount;
-        private readonly int _columnsCount;
     }
 }

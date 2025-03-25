@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 namespace Forge.View
 {
+    /// <summary>
+    /// View for <see cref="QuestJournal"/>
+    /// </summary>
     [RequireComponent(typeof(VerticalLayoutGroup))]
     public class QuestJournalView : MonoBehaviour
     {
@@ -21,6 +24,18 @@ namespace Forge.View
 
             _questJournal.ActiveQuests.CollectionChanged += OnActiveQuestsChanged;
         }
+
+        public void OnDestroy()
+        {
+            _questJournal.ActiveQuests.CollectionChanged -= OnActiveQuestsChanged;
+        }
+
+        [SerializeField]
+        private CraftingQuestView _questViewPrefab;
+        
+        private readonly Dictionary<CraftingQuest, CraftingQuestView> _quests = new ();
+        
+        private QuestJournal _questJournal;
         
         private void OnActiveQuestsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -47,7 +62,8 @@ namespace Forge.View
                 case NotifyCollectionChangedAction.Replace:
                 case NotifyCollectionChangedAction.Reset:
                 default:
-                    throw new NotImplementedException();
+                    //todo: implement
+                    break;
             }
         }
 
@@ -69,11 +85,5 @@ namespace Forge.View
             GameObjectPool.Destroy(view.gameObject);
             _quests.Remove(quest);
         }
-
-        [SerializeField]
-        private CraftingQuestView _questViewPrefab;
-        
-        private QuestJournal _questJournal;
-        private Dictionary<CraftingQuest, CraftingQuestView> _quests = new ();
     }
 }

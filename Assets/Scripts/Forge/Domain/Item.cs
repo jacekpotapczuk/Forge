@@ -1,12 +1,21 @@
-﻿namespace Forge.Domain
+﻿using System;
+
+namespace Forge.Domain
 {
-    public class Item
+    /// <summary>
+    /// Represents Item instance
+    /// </summary>
+    public class Item : IDisposable
     {
         public ItemTemplate Template { get; }
 
         public Item(ItemTemplate itemTemplate)
         {
-            Template = itemTemplate;
+            Template = itemTemplate ?? throw new NullReferenceException(nameof(itemTemplate));
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

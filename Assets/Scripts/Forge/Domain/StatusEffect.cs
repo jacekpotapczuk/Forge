@@ -2,6 +2,9 @@
 
 namespace Forge.Domain
 {
+    /// <summary>
+    /// Base Status effect class
+    /// </summary>
     public abstract class StatusEffect : ScriptableObject
     {
         public string Name => _name;

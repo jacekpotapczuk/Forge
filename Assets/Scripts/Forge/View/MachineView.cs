@@ -7,13 +7,15 @@ using UnityEngine.UI;
 
 namespace Forge.View
 {
+    /// <summary>
+    /// View for <see cref="Machine"/>
+    /// </summary>
     [RequireComponent(typeof(Image))]
     public class MachineView : MonoBehaviour
     {
         public void Awake()
         {
             _image = GetComponent<Image>();
-            _inputItemStacks = new List<ItemStackView>();
             _forgeButton.onClick.AddListener(OnForgeButtonClicked);
             _progressBarHolder.SetActive(false);
         }
@@ -22,15 +24,12 @@ namespace Forge.View
         {
             _forgeButton.onClick.RemoveListener(OnForgeButtonClicked);
         }
-
-        private void OnForgeButtonClicked()
+        
+        public void OnDestroy()
         {
-            if (_machine == null)
-            {
-                return;
-            }
-            
-            _machine.TryProcess(_gameWorld.Players[0]);
+            _machine.ProcessingStarted -= OnProcessingStarted;
+            _machine.ProcessingEnded -= OnProcessingEnded;
+            _forgeButton.onClick.RemoveListener(OnForgeButtonClicked);
         }
 
         public void Initialize(GameWorld gameWorld, Machine machine)
@@ -51,6 +50,44 @@ namespace Forge.View
 
             _progressBar.fillAmount = 1f - (_machine.TimeUntilCompletion / (_machine.ProceedRecipe.CompletionTime + _machine.Crafter.CraftingTimeReduction));
         }
+        
+        [SerializeField]
+        private Transform _inputsHolder;
+        
+        [SerializeField]
+        private ItemStackView _outputItemStackView;
+
+        [SerializeField] 
+        private ItemStackView _inputItemStackPrefab;
+
+        [SerializeField] 
+        private Button _forgeButton;
+        
+        [SerializeField] 
+        private Image _progressBar;
+        
+        [SerializeField] 
+        private GameObject _progressBarHolder;
+
+        [SerializeField] 
+        private TMP_Text _title;
+
+        private readonly List<ItemStackView> _inputItemStacks = new();
+        
+        private Machine _machine;
+        private GameWorld _gameWorld;
+        private Image _image;
+        private bool _shouldUpdateProgressBar = false;
+        
+        private void OnForgeButtonClicked()
+        {
+            if (_machine == null)
+            {
+                return;
+            }
+            
+            _machine.TryProcess(_gameWorld.Players[0]);
+        }
 
         private void OnProcessingEnded()
         {
@@ -58,18 +95,10 @@ namespace Forge.View
             _shouldUpdateProgressBar = false;
         }
 
-        private bool _shouldUpdateProgressBar = false;
-
         private void OnProcessingStarted()
         {
             _progressBarHolder.SetActive(true);
             _shouldUpdateProgressBar = true;
-        }
-
-        public void OnDestroy()
-        {
-            _machine.ProcessingStarted -= OnProcessingStarted;
-            _machine.ProcessingEnded -= OnProcessingEnded;
         }
 
         private void UpdateGraphics()
@@ -95,31 +124,5 @@ namespace Forge.View
             _outputItemStackView.Initialize(_machine.Output);
             _title.text = _machine.Template.Name;
         }
-
-        [SerializeField]
-        private Transform _inputsHolder;
-        
-        [SerializeField]
-        private ItemStackView _outputItemStackView;
-
-        [SerializeField] 
-        private ItemStackView _inputItemStackPrefab;
-
-        [SerializeField] 
-        private Button _forgeButton;
-        
-        [SerializeField] 
-        private Image _progressBar;
-        
-        [SerializeField] 
-        private GameObject _progressBarHolder;
-
-        [SerializeField] 
-        private TMP_Text _title;
-
-        private Machine _machine;
-        private GameWorld _gameWorld;
-        private Image _image;
-        private List<ItemStackView> _inputItemStacks;
     }
 }

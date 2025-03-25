@@ -2,20 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace Forge.Domain
 {
+    /// <summary>
+    /// Starting point for all gameplay logic
+    /// </summary>
     public class Root : MonoBehaviour
     {
-        [SerializeField] 
-        private List<StartingItemTemplate> _staringItems;
-
-        [SerializeField] 
-        private List<MachineTemplate> _startingMachines;
-        
-        [SerializeField] 
-        private List<CraftingQuestTemplate> _startingQuests;
-        
         public GameWorld GameWorld { get; private set; }
         
         public void Awake()
@@ -41,5 +34,19 @@ namespace Forge.Domain
         {
             GameWorld.Update(Time.deltaTime);
         }
+
+        public void OnDestroy()
+        {
+            GameWorld.Dispose();
+        }
+
+        [SerializeField] 
+        private List<StartingItemTemplate> _staringItems;
+
+        [SerializeField] 
+        private List<MachineTemplate> _startingMachines;
+        
+        [SerializeField] 
+        private List<CraftingQuestTemplate> _startingQuests;
     }
 }

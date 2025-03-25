@@ -10,6 +10,9 @@ using UnityEngine.UI;
 
 namespace Forge.View
 {
+    /// <summary>
+    /// View for <see cref="ItemStack"/>
+    /// </summary>
     public class ItemStackView : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
         public void Initialize(ItemStack itemStack)
@@ -19,35 +22,23 @@ namespace Forge.View
                 _itemStack.Changed -= UpdateView;
             }
 
-            _itemStack = itemStack;
+            _itemStack = itemStack ?? throw new NullReferenceException(nameof(itemStack));
             itemStack.Changed += UpdateView;
             UpdateView();
 
             _parentCanvas = GetComponentInParent<Canvas>();
         }
 
-        [SerializeField]
-        private Image _image;
-        
-        [SerializeField]
-        private TextMeshProUGUI _text;
-
-        private ItemStack _itemStack;
-        private Canvas _parentCanvas;
-        
-        private void UpdateView()
+        public void OnDestroy()
         {
-            if (_itemStack?.Item == null)
+            if (_itemStack == null)
             {
-                _image.sprite = null;
-                _text.text = string.Empty;
                 return;
             }
             
-            _image.sprite = _itemStack.Item.Template.Sprite;
-            _text.text = _itemStack.Amount.ToString();
+            _itemStack.Changed -= UpdateView;
         }
-        
+
         public void OnBeginDrag(PointerEventData eventData)
         {
             if (_itemStack.Item == null)
@@ -109,6 +100,30 @@ namespace Forge.View
             }
         }
 
+        [SerializeField]
+        private Image _image;
+        
+        [SerializeField]
+        private TextMeshProUGUI _text;
+        
+        [CanBeNull]
+        private ItemStackView _draggedElement;
+        private ItemStack _itemStack;
+        private Canvas _parentCanvas;
+        
+        private void UpdateView()
+        {
+            if (_itemStack?.Item == null)
+            {
+                _image.sprite = null;
+                _text.text = string.Empty;
+                return;
+            }
+            
+            _image.sprite = _itemStack.Item.Template.Sprite;
+            _text.text = _itemStack.Amount.ToString();
+        }
+
         private bool CanAddItem(ItemStackView itemToAdd)
         {
             if (itemToAdd == null)
@@ -126,8 +141,6 @@ namespace Forge.View
 
         private void AddItem(ItemStackView itemToAdd) 
             => _itemStack.Add(itemToAdd._itemStack.Item, itemToAdd._itemStack.Amount);
-
-        [CanBeNull]
-        private ItemStackView _draggedElement;
+        
     }
 }

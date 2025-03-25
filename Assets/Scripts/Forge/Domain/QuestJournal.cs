@@ -5,7 +5,10 @@ using System.Collections.ObjectModel;
 
 namespace Forge.Domain
 {
-    public class QuestJournal
+    /// <summary>
+    /// Defines Player's Quest Journal
+    /// </summary>
+    public class QuestJournal : IDisposable
     {
         public Action<CraftingQuest> QuestCompleted;
 
@@ -21,6 +24,18 @@ namespace Forge.Domain
             }
 
             player.RecipeCrafted += OnRecipeCrafted;
+        }
+        
+        public void Dispose()
+        {
+            _player.RecipeCrafted -= OnRecipeCrafted;
+
+            foreach (var q in ActiveQuests)
+            {
+                q.Completed -= OnQuestCompleted;
+            }
+            
+            ActiveQuests.Clear();
         }
         
         private readonly Player _player;
