@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 813f1a1c6dc14587aabf12c9a3d27ab8, type: 3}
+  m_Name: elemental_quest
+  m_EditorClassIdentifier: 
+  _name: Elemental
+  _requiredRecipe: {fileID: 11400000, guid: 477ba966e7d456b43937227964d482ea, type: 2}
+  _amount: 2
+  _machineReward: {fileID: 11400000, guid: a51a24f0ebee11e46a3f5347111e7fd7, type: 2}
+  _nextQuest: {fileID: 0}

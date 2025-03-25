@@ -21,8 +21,9 @@ namespace Forge.Domain
 
         public void Update(float deltaTime)
         {
-            foreach (var machine in Machines)
+            for (var i = Machines.Count - 1; i >= 0; i--)
             {
+                var machine = Machines[i];
                 machine.Update(deltaTime);
             }
         }

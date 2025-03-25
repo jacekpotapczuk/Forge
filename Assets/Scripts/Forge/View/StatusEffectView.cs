@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace Forge.View
 {
-    
     [RequireComponent(typeof(TMP_Text))]
     public class StatusEffectView : MonoBehaviour
     {
@@ -18,7 +17,7 @@ namespace Forge.View
 
         public void Initialize(StatusEffect statusEffect, HashSet<Item> items)
         {
-            _statusEffect = statusEffect ?? throw new NullReferenceException(nameof(statusEffect));
+            statusEffect = statusEffect ?? throw new NullReferenceException(nameof(statusEffect));
 
             var sb = new StringBuilder($"- {statusEffect.Name} (source: ");
 
@@ -35,6 +34,5 @@ namespace Forge.View
         }
 
         private TMP_Text _text;
-        private StatusEffect _statusEffect;
     }
 }

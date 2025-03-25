@@ -135,12 +135,14 @@ namespace Forge.Domain
             else
             {
                 var outputItem = new Item(_currentlyProceededRecipeTemplate.OutputItemTemplate);
-                _output.Add(outputItem, 1);    
+                _output.Add(outputItem, 1);
+                _crafter.NotifySuccessfulCraft(_currentlyProceededRecipeTemplate);
             }
             
             _isProcessing = false;
             _timeUntilCompletion = 0f;
             _currentlyProceededRecipeTemplate = null;
+            _crafter = null;
             ProcessingEnded?.Invoke();
         }
 

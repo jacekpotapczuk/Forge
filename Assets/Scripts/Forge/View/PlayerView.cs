@@ -11,6 +11,7 @@ namespace Forge.View
             
             _inventoryView.Initialize(player.Inventory);
             _statusEffectsView.Initialize(player.StatusEffects);
+            _questJournalView.Initialize(player.QuestJournal);
         }
 
         [SerializeField] 
@@ -18,6 +19,9 @@ namespace Forge.View
 
         [SerializeField] 
         private StatusEffectsView _statusEffectsView;
+        
+        [SerializeField] 
+        private QuestJournalView _questJournalView;
         
         private Player _player;
     }
