@@ -99,15 +99,17 @@ namespace Forge.View
 
             var result = results[0].gameObject.GetComponent<ItemStackView>();
 
-            var didAdd = result.TryAddItem(_draggedElement);
+            var canAdd = result.CanAddItem(_draggedElement);
 
-            if (didAdd)
+            if (canAdd)
             {
                 _itemStack.RemoveOne();
+                result.AddItem(_draggedElement);
+                
             }
         }
 
-        private bool TryAddItem(ItemStackView itemToAdd)
+        private bool CanAddItem(ItemStackView itemToAdd)
         {
             if (itemToAdd == null)
             {
@@ -118,10 +120,12 @@ namespace Forge.View
             {
                 return false;
             }
-            
-            _itemStack.Add(itemToAdd._itemStack.Item, itemToAdd._itemStack.Amount);
+
             return true;
         }
+
+        private void AddItem(ItemStackView itemToAdd) 
+            => _itemStack.Add(itemToAdd._itemStack.Item, itemToAdd._itemStack.Amount);
 
         [CanBeNull]
         private ItemStackView _draggedElement;

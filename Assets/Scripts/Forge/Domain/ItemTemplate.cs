@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Forge.Domain
 {
@@ -11,6 +12,7 @@ namespace Forge.Domain
         public Sprite Sprite => _sprite;
         public string Name => _name;
         public string Description => _description;
+        public List<StatusEffect> StatusEffects => _statusEffects;
         
         [SerializeField]
         private Sprite _sprite;
@@ -20,5 +22,8 @@ namespace Forge.Domain
         
         [SerializeField]
         private string _description;
+
+        [SerializeField] 
+        private List<StatusEffect> _statusEffects;
     }
 }

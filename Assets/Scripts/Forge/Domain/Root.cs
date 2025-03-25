@@ -22,8 +22,6 @@ namespace Forge.Domain
             // todo: obviously column/row count can be extracted here, but the game doesn't handle
             // resizing inventory on graphical side very well so I keep them as constants here 
             var playerInventory = new Inventory(4, 4);
-            playerInventory.AddStartingItems(_staringItems);
-            
             var player = new Player(GameWorld, playerInventory);
             
             GameWorld.AddPlayer(player);
@@ -32,6 +30,8 @@ namespace Forge.Domain
             {
                 GameWorld.SpawnMachine(machineTemplate);
             }
+            
+            playerInventory.AddStartingItems(_staringItems);
         }
 
         public void Update()

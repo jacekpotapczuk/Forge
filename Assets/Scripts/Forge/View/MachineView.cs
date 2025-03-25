@@ -29,13 +29,14 @@ namespace Forge.View
             {
                 return;
             }
-
-            _machine.TryProcess();
+            
+            _machine.TryProcess(_gameWorld.Players[0]);
         }
 
-        public void Initialize(Machine machine)
+        public void Initialize(GameWorld gameWorld, Machine machine)
         {
-            _machine = machine;
+            _gameWorld = gameWorld ?? throw new NullReferenceException(nameof(gameWorld));
+            _machine = machine ?? throw new NullReferenceException(nameof(machine));
             UpdateGraphics();
             _machine.ProcessingStarted += OnProcessingStarted;
             _machine.ProcessingEnded += OnProcessingEnded;
@@ -48,7 +49,7 @@ namespace Forge.View
                 return;
             }
 
-            _progressBar.fillAmount = 1f - (_machine.TimeUntilCompletion / _machine.ProceedRecipe.CompletionTime);
+            _progressBar.fillAmount = 1f - (_machine.TimeUntilCompletion / (_machine.ProceedRecipe.CompletionTime + _machine.Crafter.CraftingTimeReduction));
         }
 
         private void OnProcessingEnded()
@@ -117,6 +118,7 @@ namespace Forge.View
         private TMP_Text _title;
 
         private Machine _machine;
+        private GameWorld _gameWorld;
         private Image _image;
         private List<ItemStackView> _inputItemStacks;
     }

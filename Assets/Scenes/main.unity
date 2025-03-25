@@ -348,6 +348,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b6d5f30ddd9a2f1478d6f44bd44e2548, type: 2}
   - {fileID: 11400000, guid: 5b2215a629bcfc942997549021c7d348, type: 2}
   - {fileID: 11400000, guid: 04e74ffee20dadb4790c0c339f74f789, type: 2}
+  - {fileID: 11400000, guid: 04e74ffee20dadb4790c0c339f74f789, type: 2}
   _startingMachines:
   - {fileID: 11400000, guid: 3d1bd23aa4f4e1741ab649b2a795fdbc, type: 2}
   - {fileID: 11400000, guid: 42884ab4f6143814d9e9a35a1e6bbf01, type: 2}

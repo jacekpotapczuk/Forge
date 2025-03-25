@@ -6,6 +6,8 @@ namespace Forge.Domain
     public class ItemStack
     {
         public Action Changed;
+        public Action<Item> NewItemAdded;
+        public Action<Item> Cleared;
         
         public bool IsEmpty => Item == null;
         
@@ -38,9 +40,16 @@ namespace Forge.Domain
                 throw new Exception($"Can't add item of different template to {nameof(ItemStack)}");
             }
 
+            var prev = Item;
+
             Item ??= item;
             Amount += amount;
             Changed?.Invoke();
+
+            if (prev == null)
+            {
+                NewItemAdded?.Invoke(item);
+            }
         }
 
         public void RemoveOne()
@@ -69,8 +78,9 @@ namespace Forge.Domain
         
         private void Clear()
         {
+            var prev = Item;
             Item = null;
-            
+            Cleared?.Invoke(prev);
         }
     }
 }

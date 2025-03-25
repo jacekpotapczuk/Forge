@@ -22,7 +22,7 @@ namespace Forge.View
                 _gameWorld.Machines.CollectionChanged -= OnMachinesChanged;
             }
             
-            _gameWorld = gameWorld;
+            _gameWorld = gameWorld ?? throw new NullReferenceException(nameof(gameWorld));
             _gameWorld.Machines.CollectionChanged += OnMachinesChanged;
 
             foreach (var machine in gameWorld.Machines)
@@ -62,7 +62,7 @@ namespace Forge.View
         private void SpawnMachineView(Machine machine)
         {
             var machineView = GameObjectPool.Get(_machineViewPrefab, transform);
-            machineView.Initialize(machine);
+            machineView.Initialize(_gameWorld, machine);
             _machineViews.Add(machineView);
         }
         

@@ -15,3 +15,5 @@ MonoBehaviour:
   _sprite: {fileID: 21300000, guid: 548b5fb94496efa4da8ee5f3f095bf29, type: 3}
   _name: Lucky Charm
   _description: Very very lucky
+  _statusEffects:
+  - {fileID: 11400000, guid: 0863c058243e4f24a8903ac21e22e296, type: 2}

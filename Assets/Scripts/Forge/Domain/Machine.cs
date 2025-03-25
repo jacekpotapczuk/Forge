@@ -16,6 +16,7 @@ namespace Forge.Domain
 
         public float TimeUntilCompletion => _timeUntilCompletion;
         public RecipeTemplate ProceedRecipe => _currentlyProceededRecipeTemplate;
+        public Player Crafter => _crafter;
 
         public Machine(GameWorld gameWorld, MachineTemplate template)
         {
@@ -49,7 +50,7 @@ namespace Forge.Domain
             }
         }
 
-        public bool TryProcess()
+        public bool TryProcess(Player crafter)
         {
             if (_isProcessing)
             {
@@ -86,7 +87,7 @@ namespace Forge.Domain
 
                 if (areInputsProvided)
                 {
-                    ProcessRecipe(recipe);
+                    ProcessRecipe(recipe, crafter);
                     return true;
                 }
             }
@@ -95,7 +96,7 @@ namespace Forge.Domain
             return false;
         }
 
-        private void ProcessRecipe(RecipeTemplate recipeTemplate)
+        private void ProcessRecipe(RecipeTemplate recipeTemplate, Player crafter)
         {
             foreach (var recipeInput in recipeTemplate.InputItemTemplates)
             {
@@ -104,20 +105,21 @@ namespace Forge.Domain
                 correspondingInput.RemoveOne();
             }
 
-            StartProcessing(recipeTemplate);
+            StartProcessing(recipeTemplate, crafter);
         }
 
-        private void StartProcessing(RecipeTemplate recipeTemplate)
+        private void StartProcessing(RecipeTemplate recipeTemplate, Player crafter)
         {
             _isProcessing = true;
-            _timeUntilCompletion = recipeTemplate.CompletionTime;
+            _timeUntilCompletion = recipeTemplate.CompletionTime + crafter.CraftingTimeReduction;
             _currentlyProceededRecipeTemplate = recipeTemplate;
+            _crafter = crafter;
             ProcessingStarted?.Invoke();
         }
 
         private void FinishProcessing()
         {
-            var successChance = _currentlyProceededRecipeTemplate.SuccessChancePercentage;
+            var successChance = _currentlyProceededRecipeTemplate.SuccessChancePercentage + _crafter.Luck;
             var rand = UnityEngine.Random.value;
             
             if (_output.Item != null && _output.Item.Template != _currentlyProceededRecipeTemplate.OutputItemTemplate && _output.Amount > 0)
@@ -151,5 +153,6 @@ namespace Forge.Domain
         private bool _isProcessing = false;
         private float _timeUntilCompletion;
         private RecipeTemplate _currentlyProceededRecipeTemplate;
+        private Player _crafter;
     }
 }
